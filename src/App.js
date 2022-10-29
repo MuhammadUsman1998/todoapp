@@ -41,6 +41,7 @@ function App(props) {
       );
       getDB();
       setModal(false);
+      localStorage.setItem("allData",JSON.stringify(deleteItems))
     } catch (error) {}
   };
   const SubmitAddHandler = async (e) => {
@@ -64,9 +65,18 @@ function App(props) {
     } catch (error) {}
     getDB();
     setItem([...item, data]);
+    console.log({item});
     setInput({ name: "", profession: "", age: "" });
+    localStorage.setItem("allData" ,JSON.stringify([...item]))
   };
 
+
+  useEffect(()=>{
+const saveData =JSON.parse(localStorage.getItem("allData"))
+if (saveData){
+   setItem(saveData)
+}
+  },[])
   const handleUpdateSubmit = async (e) => {
     const data = {
       name: input.name,
